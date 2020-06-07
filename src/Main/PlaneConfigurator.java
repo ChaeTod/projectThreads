@@ -33,6 +33,21 @@ public class PlaneConfigurator {
         }
     }
 
+    public int calculateCapacityNumber() {
+        switch (planeMod) {
+            case "VIP":
+                return 1;
+            case "WBP":
+                return 3;
+            case "UP":
+                return 4;
+            case "CP":
+                return 2;
+            default:
+                return 0;
+        }
+    }
+
     public synchronized void get() throws InterruptedException {
         while (totalPlaneCounter < 1) {
             try {
@@ -48,7 +63,7 @@ public class PlaneConfigurator {
     }
 
     public synchronized void put() throws InterruptedException {
-        while (totalPlaneCounter >= 2) {
+        while (totalPlaneCounter >= calculateCapacityNumber()) {
             try {
                 wait(calculateBuildTime());
             } catch (InterruptedException e) {
