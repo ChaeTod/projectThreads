@@ -1,7 +1,5 @@
 package Main;
 
-import java.net.InetSocketAddress;
-
 public class PlaneConfigurator {
     //private int counter = 0;
     //private String planeModel;
@@ -19,19 +17,11 @@ public class PlaneConfigurator {
         return planeMod;
     }
 
-    public void setPlaneMod(String planeMod) {
-        this.planeMod = planeMod;
-    }
-
     public int getNecessaryPlaneNum() {
         return necessaryPlaneNum;
     }
 
-    public void setNecessaryPlaneNum(int necessaryPlaneNum) {
-        this.necessaryPlaneNum = necessaryPlaneNum;
-    }
-
-    public int calculateMakeTime() {
+    public int calculateBuildTime() {
         switch (planeMod) {
             case "VIP":
                 return 1000000;
@@ -56,21 +46,21 @@ public class PlaneConfigurator {
         }
         totalPlaneCounter--;
         System.out.println("-1 plane from the stock with the name - " +getPlaneMod());
-        System.out.println("Total count about the planes in the warehouse - " + totalPlaneCounter + " with the mode - " + getPlaneMod());
+        System.out.println("Total plane count after one plane has been released from the warehouse - " + totalPlaneCounter + " with the mode - " + getPlaneMod());
         notify();
     }
 
     public synchronized void put() throws InterruptedException {
         while (totalPlaneCounter >= 3) {
             try {
-                wait(calculateMakeTime());
+                wait(calculateBuildTime());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
         totalPlaneCounter++;
         System.out.println("+1 plane to the warehouse with type " +getPlaneMod());
-        System.out.println("Total count of the planes in the warehouse - " + totalPlaneCounter+ " with the plane's mod - " +getPlaneMod());
+        System.out.println("Total count of the planes after one plane has been added to the warehouse - " + totalPlaneCounter+ " with the plane's mod - " +getPlaneMod());
         notify();
     }
 }
