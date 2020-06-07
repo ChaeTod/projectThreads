@@ -1,10 +1,7 @@
 package Main;
 
 public class PlaneConfigurator {
-    //private int counter = 0;
-    //private String planeModel;
     private String planeMod;
-    //private int makeTime = 0;
     private int necessaryPlaneNum = 0;
     private int totalPlaneCounter = 0;
 
