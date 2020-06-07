@@ -21,13 +21,13 @@ public class PlaneConfigurator {
     public int calculateBuildTime() {
         switch (planeMod) {
             case "VIP":
-                return 1000000;
+                return 20000;
             case "WBP":
-                return 100000;
+                return 15000;
             case "UP":
                 return 10000;
             case "CP":
-                return 1000;
+                return 5000;
             default:
                 return 0;
         }
@@ -42,13 +42,13 @@ public class PlaneConfigurator {
             }
         }
         totalPlaneCounter--;
-        System.out.println("-1 plane from the stock with the name - " +getPlaneMod());
-        System.out.println("Total plane count after one plane has been released from the warehouse - " + totalPlaneCounter + " with the mode - " + getPlaneMod());
+        System.out.println("-1 plane has been collected from the warehouse which has mode - " +getPlaneMod());
+        System.out.println("Total plane count after one plane has been removed from the warehouse - " + totalPlaneCounter + " with the mode - " + getPlaneMod());
         notify();
     }
 
     public synchronized void put() throws InterruptedException {
-        while (totalPlaneCounter >= 3) {
+        while (totalPlaneCounter >= 2) {
             try {
                 wait(calculateBuildTime());
             } catch (InterruptedException e) {
@@ -56,7 +56,7 @@ public class PlaneConfigurator {
             }
         }
         totalPlaneCounter++;
-        System.out.println("+1 plane to the warehouse with type " +getPlaneMod());
+        System.out.println("+1 plane has been added to the warehouse with the mode " +getPlaneMod());
         System.out.println("Total count of the planes after one plane has been added to the warehouse - " + totalPlaneCounter+ " with the plane's mod - " +getPlaneMod());
         notify();
     }
